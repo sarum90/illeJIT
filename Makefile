@@ -28,3 +28,7 @@ out/sample.s: sample.c sample.h operations.h
 out/main.o: main.c operations.h sample.h generate.h
 	@mkdir -p out/
 	gcc -o $@ -c $< $(ARGS)
+
+clean:
+	rm -rf out
+	rm ./test
