@@ -1,5 +1,5 @@
 
-ARGS=--std=gnu11 -Wall  -Werror -O1
+ARGS=-g --std=gnu11 -Wall  -Werror -O2
 
 OBJS=out/stack.o out/main.o out/sample.o out/generate.o out/expression.o
 

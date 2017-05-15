@@ -49,6 +49,12 @@ void stack_mult_int(struct val_stack *s) {
   *push_val(s) = mult_int(l, r);
 }
 
+void stack_add_int(struct val_stack *s) {
+  struct val *l = pop_val(s);
+  struct val *r = pop_val(s);
+  *push_val(s) = add_int(l, r);
+}
+
 void stack_less_than_int(struct val_stack *s) {
   struct val *l = pop_val(s);
   struct val *r = pop_val(s);

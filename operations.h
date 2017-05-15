@@ -31,6 +31,18 @@ static inline struct val mult_int(struct val *l, struct val *r) {
   return res;
 }
 
+static inline struct val add_int(struct val *l, struct val *r) {
+  struct val res;
+  if(l->type != VAL_TYPE_INT ||
+     r->type != VAL_TYPE_INT) {
+    res.type = VAL_TYPE_UNDEFINED;
+  } else {
+    res.type = VAL_TYPE_INT;
+    res.i = l->i + r->i;
+  }
+  return res;
+}
+
 static inline struct val less_than_int(struct val *l, struct val *r) {
   struct val res;
   if(l->type != VAL_TYPE_INT ||

@@ -10,6 +10,7 @@ enum expr_type {
 
 enum binary_operator {
   BIN_OP_MULT_INT,
+  BIN_OP_ADD_INT,
   BIN_OP_LESS_THAN_INT,
   BIN_OP_AND_BOOL,
 };
@@ -26,7 +27,6 @@ struct expression {
     };
   };
 };
-
 
 struct expression* make_literal(struct val v);
 struct expression* make_variable(struct val *v);
