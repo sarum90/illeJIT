@@ -3,11 +3,11 @@
 void  sample(struct val_stack *s) {
   push_int(s, 1);
   push_int(s, 0);
-  less_than_int(s);
+  stack_less_than_int(s);
   push_int(s, 3);
   push_int(s, 2);
-  mult_int(s);
+  stack_mult_int(s);
   push_int(s, 4);
-  less_than_int(s);
-  and_bool(s);
+  stack_less_than_int(s);
+  stack_and_bool(s);
 }

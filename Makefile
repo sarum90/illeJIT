@@ -1,7 +1,7 @@
 
 ARGS=--std=gnu11 -Wall  -Werror -O1
 
-OBJS=out/operations.o out/main.o out/sample.o out/generate.o
+OBJS=out/stack.o out/main.o out/sample.o out/generate.o out/expression.o
 
 default: test
 	./test
@@ -9,11 +9,15 @@ default: test
 test: $(OBJS)
 	gcc -o test $(OBJS) $(ARGS)
 
+out/expression.o: expression.c expression.h operations.h
+	@mkdir -p out/
+	gcc -o $@ -c $< $(ARGS)
+
 out/generate.o: generate.c generate.h
 	@mkdir -p out/
 	gcc -o $@ -c $< $(ARGS)
 
-out/operations.o: operations.c operations.h
+out/stack.o: stack.c stack.h operations.h
 	@mkdir -p out/
 	gcc -o $@ -c $< $(ARGS)
 

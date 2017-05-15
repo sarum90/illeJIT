@@ -19,21 +19,40 @@ struct val {
   };
 };
 
-#define STACK_SIZE 4096
+static inline struct val mult_int(struct val *l, struct val *r) {
+  struct val res;
+  if(l->type != VAL_TYPE_INT ||
+     r->type != VAL_TYPE_INT) {
+    res.type = VAL_TYPE_UNDEFINED;
+  } else {
+    res.type = VAL_TYPE_INT;
+    res.i = l->i * r->i;
+  }
+  return res;
+}
 
-struct val_stack {
-  int top;
-  struct val b[STACK_SIZE];
-};
+static inline struct val less_than_int(struct val *l, struct val *r) {
+  struct val res;
+  if(l->type != VAL_TYPE_INT ||
+     r->type != VAL_TYPE_INT) {
+    res.type = VAL_TYPE_BOOL;
+    res.b = 0;
+  } else {
+    res.type = VAL_TYPE_BOOL;
+    res.b = (l->i < r->i);
+  }
+  return res;
+}
 
-void init_val_stack(struct val_stack * s);
-
-struct val *push_val(struct val_stack *s);
-struct val *pop_val(struct val_stack *s);
-
-void push_int(struct val_stack *s, int i);
-
-void mult_int(struct val_stack *s);
-void less_than_int(struct val_stack *s);
-
-void and_bool(struct val_stack *s);
+static inline struct val and_bool(struct val *l, struct val *r) {
+  struct val res;
+  if(l->type != VAL_TYPE_BOOL ||
+     r->type != VAL_TYPE_BOOL) {
+    res.type = VAL_TYPE_BOOL;
+    res.b = 0;
+  } else {
+    res.type = VAL_TYPE_BOOL;
+    res.b = (l->b && r->b);
+  }
+  return res;
+}

@@ -30,4 +30,7 @@ void destroy_jit_generator(struct jit_generator* g);
 void generate_return(struct jit_generator *g);
 void generate_load_imm64(struct jit_generator *g, enum modrw_registers r, long val);
 void generate_call_reg(struct jit_generator *g, enum modrw_registers);
+void generate_push_reg(struct jit_generator *g, enum modrw_registers);
+void generate_pop_reg(struct jit_generator *g, enum modrw_registers);
+void generate_cpy_reg_reg(struct jit_generator *g, enum modrw_registers dst, enum modrw_registers src);
 

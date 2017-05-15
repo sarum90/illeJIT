@@ -16,7 +16,7 @@ struct modrw {
 };
 typedef char assert_size_of_modrw[sizeof(struct modrw) == 1 ? 1: -1];
 
-struct movimm {
+struct unary_opcode {
   union {
     struct {
       char r_m :3;
@@ -25,7 +25,7 @@ struct movimm {
     char as_char;
   };
 };
-typedef char assert_size_of_movimm[sizeof(struct movimm) == 1 ? 1: -1];
+typedef char assert_size_of_movimm[sizeof(struct unary_opcode) == 1 ? 1: -1];
 
 void init_jit_generator(struct jit_generator* g, int size) {
   g->code = mmap(NULL, size, PROT_WRITE | PROT_EXEC, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
@@ -54,7 +54,7 @@ void generate_return(struct jit_generator *g) {
 
 void generate_load_imm64(struct jit_generator *g, enum modrw_registers r, long val) {
   generate_bytes(g, 1)[0] = 0x48;
-  struct movimm m;
+  struct unary_opcode m;
   m.opcode = 0x17;
   m.r_m = r;
   generate_bytes(g, 1)[0] = m.as_char;
@@ -69,3 +69,32 @@ void generate_call_reg(struct jit_generator *g, enum modrw_registers r) {
   mrw.r_m = r;
   generate_bytes(g, 1)[0] = mrw.as_char;
 }
+
+void generate_push_reg(struct jit_generator *g, enum modrw_registers r) {
+  struct unary_opcode m;
+  m.opcode = 0x0a;
+  m.r_m = r;
+  generate_bytes(g, 1)[0] = m.as_char;
+}
+
+void generate_pop_reg(struct jit_generator *g, enum modrw_registers r) {
+  struct unary_opcode m;
+  m.opcode = 0x0b;
+  m.r_m = r;
+  generate_bytes(g, 1)[0] = m.as_char;
+}
+
+void generate_cpy_reg_reg(struct jit_generator *g, enum modrw_registers dst, enum modrw_registers src)
+{
+  // rex.w (64 bit)
+  generate_bytes(g, 1)[0] = 0x48;
+  // mov
+  generate_bytes(g, 1)[0] = 0x89;
+
+  struct modrw mrw;
+  mrw.mod = MODRW_DIRECT;
+  mrw.opcode = src;
+  mrw.r_m = dst;
+  generate_bytes(g, 1)[0] = mrw.as_char;
+}
+

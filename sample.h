@@ -1,5 +1,5 @@
 #pragma once
 
-#include "operations.h"
+#include "stack.h"
 
 void  sample(struct val_stack *s);
