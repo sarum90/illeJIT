@@ -4,8 +4,6 @@ enum val_type {
   VAL_TYPE_UNDEFINED,
   VAL_TYPE_BOOL,
   VAL_TYPE_INT,
-  VAL_TYPE_DOUBLE,
-  VAL_TYPE_STRING,
 };
 
 struct val {
@@ -14,8 +12,6 @@ struct val {
   union {
     char b;
     int i;
-    double d;
-    char *s;
   };
 };
 
